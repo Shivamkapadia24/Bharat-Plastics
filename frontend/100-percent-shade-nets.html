@@ -747,7 +747,7 @@ document.addEventListener('DOMContentLoaded', function() {
         productsGrid.innerHTML =
             '<p style="text-align: center; grid-column: 1 / -1;">Loading products...</p>';
 
-        const url = `http://localhost:5001/api/products?shadePercentage=${SHADE_PERCENTAGE}`;
+        const url = `https://bharat-plastics.onrender.com/api/products?shadePercentage=${SHADE_PERCENTAGE}`;
 
         try {
             const response = await fetch(url);

@@ -2,7 +2,7 @@
         let allProducts = [];
         let cart = [];
         let selectedProduct = null;
-        const API_BASE_URL = 'http://localhost:5001';
+        const API_BASE_URL = 'https://bharat-plastics.onrender.com';
         
         // DOM elements
         const productSearch = document.getElementById('productSearch');

@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
         productsGrid.innerHTML =
             '<p style="text-align: center; grid-column: 1 / -1;">Loading products...</p>';
 
-        let url = 'http://localhost:5001/api/products?';
+        let url = 'https://bharat-plastics.onrender.com/api/products?';
 
         if (searchTerm) {
             url += `search=${encodeURIComponent(searchTerm)}&`;

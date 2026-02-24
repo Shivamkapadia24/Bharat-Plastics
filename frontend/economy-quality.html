@@ -598,7 +598,7 @@ document.addEventListener('DOMContentLoaded', function() {
         productsGrid.innerHTML =
             '<p style="text-align: center; grid-column: 1 / -1;">Loading products...</p>';
 
-        const url = `http://localhost:5001/api/products?category=Tarpaulins&quality=${encodeURIComponent(QUALITY)}`;
+        const url = `https://bharat-plastics.onrender.com/api/products?category=Tarpaulins&quality=${encodeURIComponent(QUALITY)}`;
 
         try {
             const response = await fetch(url);

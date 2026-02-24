@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            const response = await fetch('http://localhost:5001/api/orders', {
+            const response = await fetch('https://bharat-plastics.onrender.com/api/orders', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
-            const response = await fetch('http://localhost:5001/api/cart', {
+            const response = await fetch('https://bharat-plastics.onrender.com/api/cart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -361,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // API function to remove from cart
     async function handleRemoveItem(productId, token) {
          try {
-             const response = await fetch(`http://localhost:5001/api/cart/${productId}`, {
+             const response = await fetch(`https://bharat-plastics.onrender.com/api/cart/${productId}`, {
                  method: 'DELETE',
                  headers: { 'Authorization': `Bearer ${token}` }
              });
@@ -396,7 +396,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // API function to update quantity
     async function handleUpdateQuantity(productId, newQuantity, token) {
         try {
-            const response = await fetch(`http://localhost:5001/api/cart/${productId}`, {
+            const response = await fetch(`https://bharat-plastics.onrender.com/api/cart/${productId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // API function to remove from wishlist
     async function handleRemoveFromWishlist(productId, token) {
          try {
-             const response = await fetch(`http://localhost:5001/api/wishlist/${productId}`, {
+             const response = await fetch(`https://bharat-plastics.onrender.com/api/wishlist/${productId}`, {
                  method: 'DELETE',
                  headers: { 'Authorization': `Bearer ${token}` }
              });
@@ -611,7 +611,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const icon = wishlistBtn.querySelector('i');
             const isInWishlist = icon.classList.contains('fas'); 
             const method = isInWishlist ? 'DELETE' : 'POST';
-            const url = isInWishlist ? `http://localhost:5001/api/wishlist/${productId}` : 'http://localhost:5001/api/wishlist';
+            const url = isInWishlist ? `https://bharat-plastics.onrender.com/api/wishlist/${productId}` : 'https://bharat-plastics.onrender.com/api/wishlist';
 
             try {
                 const fetchOptions = {
@@ -797,7 +797,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             try {
-                const response = await fetch('http://localhost:5001/api/orders', {
+                const response = await fetch('https://bharat-plastics.onrender.com/api/orders', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -908,7 +908,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             try {
-                const response = await fetch('http://localhost:5001/api/auth/login', {
+                const response = await fetch('https://bharat-plastics.onrender.com/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: email, password: password }),
@@ -954,7 +954,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return; 
             }
             try {
-                const response = await fetch('http://localhost:5001/api/auth/register', {
+                const response = await fetch('https://bharat-plastics.onrender.com/api/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, password }), 
@@ -1062,7 +1062,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===============================
 // AI Chatbot
 // ===============================
-const API_BASE_URL = 'http://localhost:5001'; // adjust for production
+const API_BASE_URL = 'https://bharat-plastics.onrender.com'; // adjust for production
 
 const chatToggleButton = document.getElementById('chat-toggle-button');
 const chatWidget = document.getElementById('chat-widget');
@@ -1252,7 +1252,7 @@ async function handleChatbotRequest(prompt) {
     addTypingIndicator();
 
     try {
-        const response = await fetch('http://localhost:5001/api/ai/chat', {
+        const response = await fetch('https://bharat-plastics.onrender.com/api/ai/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ prompt: prompt }),
@@ -1295,7 +1295,7 @@ async function handleRecommendationAddToCart(productName) {
     try {
         // Find product by name using your /api/products search route
         const response = await fetch(
-            `http://localhost:5001/api/products?search=${encodeURIComponent(productName)}`
+            `https://bharat-plastics.onrender.com/api/products?search=${encodeURIComponent(productName)}`
         );
 
         if (!response.ok) {
@@ -1391,7 +1391,7 @@ if (chatCloseButton) {
             console.log('User is logged in, fetching cart and wishlist...');
             try {
                 // Fetch Cart
-                const cartResponse = await fetch('http://localhost:5001/api/cart', {
+                const cartResponse = await fetch('https://bharat-plastics.onrender.com/api/cart', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (cartResponse.ok) {
@@ -1413,7 +1413,7 @@ if (chatCloseButton) {
                 }
 
                 // Fetch Wishlist
-                const wishlistResponse = await fetch('http://localhost:5001/api/wishlist', {
+                const wishlistResponse = await fetch('https://bharat-plastics.onrender.com/api/wishlist', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (wishlistResponse.ok) {

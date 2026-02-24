@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline POS | GreenNets Admin</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="offline-sales.css">
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="logo">GreenNets</div>
+        <ul class="nav-links">
+            <li>
+                <a href="dashboard.html">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="dashboard.html?view=orders">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="nav-text">Orders</span>
+                </a>
+            </li>
+            <li>
+                <a href="dashboard.html?view=products">
+                    <i class="fas fa-box"></i>
+                    <span class="nav-text">Products</span>
+                </a>
+            </li>
+            <li class="active">
+                <i class="fas fa-cash-register"></i>
+                <span class="nav-text">Offline Sales (POS)</span>
+            </li>
+        <li>
+          <a href="dashboard.html?view=sales">
+            <i class="fas fa-chart-line"></i>
+            <span class="nav-text">Sales History</span>
+          </a>
+        </li>
+            <li onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="nav-text">Logout</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- HEADER -->
+        <header class="top-header">
+            <div class="admin-info">
+                <div class="admin-avatar" id="adminAvatar">A</div>
+                <div>
+                    <h3 id="adminName">Admin</h3>
+                    <p style="color: #777; font-size: 14px;">Point of Sale</p>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </header>
+
+        <!-- CONTENT AREA -->
+        <div class="content-box">
+            <h2>Offline Point of Sale (POS)</h2>
+            <p style="color: #777; margin-bottom: 20px;">Process in-store sales and generate bills</p>
+            
+            <!-- Success/Error Messages -->
+            <div id="successAlert" class="alert alert-success">
+                <i class="fas fa-check-circle"></i> <span id="successMessage"></span>
+            </div>
+            
+            <div id="errorAlert" class="alert alert-error">
+                <i class="fas fa-exclamation-circle"></i> <span id="errorMessage"></span>
+            </div>
+            
+            <!-- Sale Information (shown after successful sale) -->
+            <div id="saleInfo" class="sale-info">
+                <h4><i class="fas fa-receipt"></i> Sale Completed Successfully!</h4>
+                <p>Bill Number: <span id="saleId" class="sale-id"></span></p>
+                <p>Total Amount: ₹<span id="saleTotal"></span></p>
+                <button onclick="resetForm()" class="btn btn-primary" style="margin-top: 10px;">
+                    <i class="fas fa-plus"></i> New Sale
+                </button>
+            </div>
+            
+            <div class="pos-container">
+                <!-- LEFT COLUMN: Customer & Product Selection -->
+                <div>
+                    <!-- Customer Section -->
+                    <div class="customer-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-user"></i> Customer Details
+                        </h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Customer Name (Optional)</label>
+                            <input type="text" id="customerName" class="form-input" placeholder="Walk-in customer">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Customer Phone (Optional)</label>
+                            <input type="tel" id="customerPhone" class="form-input" placeholder="9999999999">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Payment Mode *</label>
+                            <select id="paymentMode" class="form-input" required>
+                                <option value="Cash">Cash</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Card">Card</option>
+                                
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Notes (Optional)</label>
+                            <textarea id="notes" class="form-input" rows="3" placeholder="Any additional notes..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Search Section -->
+                    <div class="customer-section" style="margin-top: 20px;">
+                        <h3 class="section-title">
+                            <i class="fas fa-search"></i> Add Products
+                        </h3>
+                        
+                        <div class="search-container">
+                            <input type="text" id="productSearch" class="form-input" 
+                                   placeholder="Search product by name..." autocomplete="off">
+                            <div id="searchResults" class="search-results"></div>
+                        </div>
+                        
+                        <!-- Selected Product Preview -->
+                        <div id="selectedProduct" class="selected-product">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4 id="selectedProductName" style="margin: 0 0 5px 0;"></h4>
+                                    <p id="selectedProductDetails" style="margin: 0; color: #777; font-size: 13px;"></p>
+                                    <div style="margin-top: 5px;">
+                                        <span id="selectedProductStock" class="stock-badge stock-in"></span>
+                                        <span style="margin-left: 10px; font-weight: 600;">₹<span id="selectedProductPrice"></span></span>
+                                    </div>
+                                </div>
+                                <button id="addToCartBtn" class="add-to-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Bill
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- RIGHT COLUMN: Cart & Calculations -->
+                <div>
+                    <div class="cart-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-receipt"></i> Bill Items
+                        </h3>
+                        
+                        <!-- Cart Table -->
+                        <div id="cartTableContainer">
+                            <div class="empty-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <h3>Cart is Empty</h3>
+                                <p>Search and add products to create a bill</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Calculations -->
+                        <div class="calculations">
+                            <div class="calc-row">
+                                <span class="calc-label">Subtotal:</span>
+                                <span class="calc-value">₹<span id="subtotal">0</span></span>
+                            </div>
+                            
+                            
+                            
+                            <div class="calc-row grand-total">
+                                <span class="calc-label">Grand Total:</span>
+                                <span class="calc-value">₹<span id="grandTotal">0</span></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <button id="submitSaleBtn" class="submit-btn" disabled>
+                            <i class="fas fa-receipt"></i> Generate Bill / Save Sale
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="offline-sales.js"></script>
+</body>
+</html>
